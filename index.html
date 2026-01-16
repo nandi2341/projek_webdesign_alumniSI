@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Alumni UNIKU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body id="page-home">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+                <img src="assets/logo.png" alt="Logo" width="35" height="35" class="me-2">
+                <span>SI UNIKU ALUMNI</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center" id="dynamic-nav">
+                    </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="p-5 mb-5 bg-white rounded-3 shadow border-bottom border-5 border-primary animate-up">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="fw-bold display-6">Selamat Datang, <span class="text-primary" id="welcome-name">Keluarga SI</span>! 👋</h1>
+                    <p class="lead text-muted">Portal resmi alumni SI UNIKU.</p>
+                    <div id="banner-btn-container" class="mt-4"></div>
+                </div>
+                <div class="col-md-4 text-center d-none d-md-block">
+                    <img src="https://cdn-icons-png.flaticon.com/512/401/401176.png" class="img-fluid" style="max-height: 180px; opacity:0.8;">
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-5 animate-up">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h3 class="fw-bold"><i class="fas fa-newspaper text-primary"></i> Berita Prodi</h3>
+            </div>
+            <div class="row g-4" id="home-berita-container">
+                <div class="col-12 text-center text-muted">Memuat berita...</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 animate-up">
+                <h4 class="fw-bold mb-3"><i class="fas fa-briefcase text-primary"></i> Loker Terbaru</h4>
+                <div id="home-loker-summary"></div>
+            </div>
+            <div class="col-md-4 animate-up">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white fw-bold border-0 pt-3">
+                        <i class="fas fa-calendar-check text-danger"></i> Agenda
+                    </div>
+                    <ul class="list-group list-group-flush" id="home-events-container"></ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container text-center text-white">
+            <img src="assets/logo.png" width="30" class="mb-2">
+            <p class="mb-0 fw-bold">SI UNIKU ALUMNI</p>
+            <p class="small text-white-50">&copy; 2026 Universitas Kuningan.</p>
+        </div>
+    </footer>
+
+    <div class="modal fade" id="modalBerita">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold" id="berita-judul"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="berita-gambar" class="img-fluid rounded mb-3 w-100" style="max-height:300px; object-fit:cover;">
+                <div id="berita-isi" style="line-height: 1.8; white-space: pre-wrap;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEvent">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title fw-bold">Detail Agenda</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <h4 id="event-judul" class="fw-bold mb-3">Loading...</h4>
+                
+                <div class="d-flex align-items-center mb-2">
+                    <i class="fas fa-calendar-alt text-danger me-3 fs-5"></i>
+                    <div>
+                        <small class="text-muted d-block">Tanggal</small>
+                        <span id="event-tanggal" class="fw-bold">-</span>
+                    </div>
+                </div>
+                
+                <div class="d-flex align-items-center mb-4">
+                    <i class="fas fa-map-marker-alt text-danger me-3 fs-5"></i>
+                    <div>
+                        <small class="text-muted d-block">Lokasi</small>
+                        <span id="event-lokasi" class="fw-bold">-</span>
+                    </div>
+                </div>
+
+                <h6 class="border-bottom pb-2 mb-2 text-secondary">Deskripsi Kegiatan</h6>
+                <div id="event-deskripsi" class="text-muted" style="line-height: 1.6;">-</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
