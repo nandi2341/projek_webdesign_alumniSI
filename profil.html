@@ -1,106 +1,194 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>Edit Profil - Alumni SI UNIKU</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body id="page-profil">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit Profil - ILUSI UNIKU</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body id="page-profil">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
-                <img src="https://raw.githubusercontent.com/nandi2341/praktikum_webdesain/refs/heads/main/20230329_051749.png" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2">
-                ALUMNI SI
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="profil.html">Profil Saya</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="organisasi.html">Organisasi</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="loker.html">Bursa Kerja</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="forum.html">Forum</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="alumni.html">Direktori</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-warning fw-bold" href="#" onclick="logout()">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-                    </li>
-                </ul>
-            </div>
+      <div class="container">
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center"
+          href="index.html"
+        >
+          <img
+            src="https://raw.githubusercontent.com/nandi2341/praktikum_webdesain/refs/heads/main/20230329_051749.png"
+            alt="Logo"
+            width="40"
+            height="40"
+            class="d-inline-block align-text-top me-2"
+          />
+          ALUMNI SI
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Dashboard</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="profil.html">Profil Saya</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="organisasi.html">Organisasi</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="loker.html">Bursa Kerja</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="forum.html">Forum</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="alumni.html">Direktori</a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link text-warning fw-bold"
+                href="#"
+                onclick="logout()"
+              >
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
 
     <main class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow">
-                    <div class="card-header bg-white fw-bold">Edit Data Pribadi</div>
-                    <div class="card-body">
-                        <form id="form-profil">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label class="small text-muted">NIM (Tidak bisa diubah)</label>
-                                    <input type="text" name="nim" class="form-control bg-light" readonly>
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="small text-muted">Email (Key)</label>
-                                    <input type="text" name="email" class="form-control bg-light" readonly>
-                                </div>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label>Nama Lengkap</label>
-                                <input type="text" name="nama" class="form-control" required>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label>Tahun Lulus</label>
-                                    <input type="number" name="tahun" class="form-control" required>
-                                </div>
-                                <div class="col-md-6">
-                                    <label>Pekerjaan</label>
-                                    <input type="text" name="pekerjaan" class="form-control">
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label>Keahlian / Skill</label>
-                                <input type="text" name="skill" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>Link LinkedIn (Gunakan https://)</label>
-                                <input type="url" name="linkedin" class="form-control">
-                            </div>
-                            <div class="mb-3">
-                                <label>URL Foto Profil (Gunakan https://)</label>
-                                <input type="url" name="foto" class="form-control">
-                            </div>
-
-                            <button type="submit" class="btn btn-success">Simpan Perubahan</button>
-                        </form>
-                    </div>
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow">
+            <div class="card-header bg-white fw-bold">Edit Data Pribadi</div>
+            <div class="card-body">
+              <form id="form-profil">
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label class="small text-muted"
+                      >NIM (Tidak bisa diubah)</label
+                    >
+                    <input
+                      type="text"
+                      name="nim"
+                      class="form-control bg-light"
+                      readonly
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label class="small text-muted">Email (Key)</label>
+                    <input
+                      type="text"
+                      name="email"
+                      class="form-control bg-light"
+                      readonly
+                    />
+                  </div>
                 </div>
+
+                <div class="mb-3">
+                  <label>Nama Lengkap</label>
+                  <input
+                    type="text"
+                    name="nama"
+                    class="form-control"
+                    required
+                  />
+                </div>
+                <div class="row mb-3">
+                  <div class="col-md-6">
+                    <label>Tahun Lulus</label>
+                    <input
+                      type="number"
+                      name="tahun"
+                      class="form-control"
+                      required
+                    />
+                  </div>
+                  <div class="col-md-6">
+                    <label>Pekerjaan</label>
+                    <input type="text" name="pekerjaan" class="form-control" />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label>Keahlian / Skill</label>
+                  <input type="text" name="skill" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <label>Link LinkedIn (Gunakan https://)</label>
+                  <input type="url" name="linkedin" class="form-control" />
+                </div>
+                <div class="mb-3">
+                  <label>URL Foto Profil (Gunakan https://)</label>
+                  <input type="url" name="foto" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                  Simpan Perubahan
+                </button>
+              </form>
             </div>
+          </div>
         </div>
+      </div>
     </main>
 
-    <footer class="bg-dark text-white text-center py-3 mt-auto"><p>&copy; 2026 Alumni SI UNIKU</p></footer>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script><script src="script.js"></script>
-</body>
+    <footer
+      style="
+        background: url('https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg')
+          no-repeat center center;
+        background-size: cover;
+        padding: 0;
+      "
+    >
+      <div
+        style="
+          background-color: rgba(0, 0, 0, 0.8);
+          padding: 40px 0;
+          width: 100%;
+          height: 100%;
+        "
+      >
+        <div class="container text-center text-white">
+          <div class="d-flex align-items-center justify-content-center mb-3">
+            <img
+              src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true"
+              alt="Logo"
+              width="40"
+              class="me-2"
+              style="filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))"
+            />
+            <h5 class="mb-0 fw-bold">ILUSI UNIKU</h5>
+          </div>
+
+          <p class="small text-white-50 mb-3">
+            Jalan Pramuka No.67, Purwawinangun, <br />
+            Kuningan, Kabupaten Kuningan, Jawa Barat 45512
+          </p>
+
+          <hr class="border-secondary mx-auto" style="width: 50%" />
+          <p class="small text-white-50 mb-0">
+            &copy; 2026 Universitas Kuningan.
+          </p>
+        </div>
+      </div>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
