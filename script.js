@@ -143,27 +143,39 @@ function setupForum() {
 }
 
 function loadForum() {
-  $("#forum-container").html("...");
+  $("#forum-container").html(
+    '<div class="text-center py-3"><div class="spinner-border text-primary"></div></div>',
+  );
+
   $.getJSON(API_URL + "?action=get_forum", function (r) {
     let html = "";
-    if (r.data)
+    if (!r.data || r.data.length === 0) {
+      html =
+        '<div class="alert alert-info text-center">Belum ada topik diskusi. Mulailah membuat topik baru!</div>';
+    } else {
       r.data.forEach((i) => {
-        // LOGIKA WARNA KATEGORI
         let badgeClass = "secondary";
         if (i[3] === "Info Event") badgeClass = "danger";
         else if (i[3] === "Tanya Jawab") badgeClass = "success";
         else if (i[3] === "Diskusi Umum") badgeClass = "primary";
 
+        // Gunakan w-100 agar kartu memenuhi lebar kontainer induk
         html += `
-            <div class="card mb-2 border-0 shadow-sm">
-                <div class="card-body">
-                    <span class="badge bg-${badgeClass} mb-2">${i[3]}</span>
-                    <h5>${i[4]}</h5>
-                    <p class="text-truncate">${i[5]}</p>
-                    <button onclick="bukaDetail('${i[0]}','${i[4]}','${i[2]}','${i[5].replace(/\n/g, " ")}')" class="btn btn-sm btn-outline-primary">Lihat</button>
-                </div>
-            </div>`;
+                <div class="card mb-3 border-0 shadow-sm w-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="badge bg-${badgeClass}">${i[3]}</span>
+                            <small class="text-muted" style="font-size: 0.75rem">${new Date(i[1]).toLocaleDateString()}</small>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2">${i[4]}</h5>
+                        <p class="text-muted small text-truncate mb-3">${i[5]}</p>
+                        <button onclick="bukaDetail('${i[0]}','${i[4]}','${i[2]}','${i[5].replace(/\n/g, " ")}')" class="btn btn-sm btn-outline-primary w-100">
+                            Lihat Diskusi <i class="fas fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>`;
       });
+    }
     $("#forum-container").html(html);
   });
 }
@@ -304,6 +316,7 @@ function setupLoker() {
         let badgeColor = job[4] == "Full-time" ? "success" : "warning";
         let btnAction = "",
           deskripsi = "";
+
         if (user) {
           let linkUrl =
             job[6] && job[6] !== "-" && job[6] !== "#" ? job[6] : null;
@@ -313,13 +326,36 @@ function setupLoker() {
           deskripsi = `<p class="card-text small mt-3 text-muted" style="white-space: pre-line;">${job[5]}</p>`;
         } else {
           btnAction = `<a href="login.html" class="btn btn-primary w-100"><i class="fas fa-lock me-2"></i>Login untuk Melamar</a>`;
-          deskripsi = `<div class="p-3 bg-light rounded mt-3 text-center"><small class="text-muted"><i class="fas fa-eye-slash me-1"></i> Rincian kualifikasi & kontak disembunyikan.</small></div>`;
+          deskripsi = `<div class="p-3 bg-light rounded mt-3 text-center"><small class="text-muted"><i class="fas fa-eye-slash me-1"></i> Rincian disembunyikan.</small></div>`;
         }
-        html += `<div class="col-md-6 mb-4"><div class="card h-100 shadow-sm border-0"><div class="card-body d-flex flex-column"><div class="d-flex justify-content-between align-items-start mb-2"><div><h5 class="card-title fw-bold text-dark mb-1">${job[2]}</h5><h6 class="card-subtitle text-primary"><i class="fas fa-building me-1"></i> ${job[3]}</h6></div><span class="badge bg-${badgeColor}">${job[4]}</span></div>${deskripsi}<div class="mt-auto pt-3">${btnAction}</div></div><div class="card-footer bg-white text-muted small border-top-0"><i class="far fa-clock me-1"></i> Diposting: ${new Date(job[1]).toLocaleDateString()}</div></div></div>`;
+
+        // PERBAIKAN DISINI: Gunakan 'col-12 col-md-6'
+        // col-12: Di HP dia ambil 1 baris penuh.
+        // col-md-6: Di Laptop dia ambil setengah (2 kolom).
+        html += `
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <h5 class="card-title fw-bold text-dark mb-1">${job[2]}</h5>
+                                    <h6 class="card-subtitle text-primary"><i class="fas fa-building me-1"></i> ${job[3]}</h6>
+                                </div>
+                                <span class="badge bg-${badgeColor}">${job[4]}</span>
+                            </div>
+                            ${deskripsi}
+                            <div class="mt-auto pt-3">${btnAction}</div>
+                        </div>
+                        <div class="card-footer bg-white text-muted small border-top-0">
+                            <i class="far fa-clock me-1"></i> Diposting: ${new Date(job[1]).toLocaleDateString()}
+                        </div>
+                    </div>
+                </div>`;
       });
     }
     $("#loker-container").html(html);
   });
+
   $("#form-loker").submit(function (e) {
     e.preventDefault();
     if (!user) {
