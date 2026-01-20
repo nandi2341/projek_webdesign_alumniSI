@@ -1,4 +1,3 @@
-// GANTI URL DEPLOY BARU KAMU DI SINI
 const API_URL =
   "https://script.google.com/macros/s/AKfycby8H1-tf80xeQuQ2FOrfxvN2oYSM3ju-SRdbLpPWXNeL1W_arLLhxrR8YhWf9FNCbtO_A/exec";
 
@@ -7,6 +6,7 @@ const pageId = $("body").attr("id");
 let globalBerita = [];
 let globalEvents = [];
 
+//Hasbi
 $(document).ready(function () {
   renderNavbar();
   if (pageId === "page-home") setupDashboard();
@@ -29,8 +29,6 @@ $(document).ready(function () {
 });
 
 function renderNavbar() {
-  // ... (KODE RENDER NAVBAR SAMA PERSIS SEPERTI SEBELUMNYA) ...
-  // Biar hemat tempat, pakai kode navbar dari jawaban sebelumnya
   let isActive = (id) => (pageId === id ? "active fw-bold" : "");
   let html = `<li class="nav-item"><a class="nav-link ${isActive("page-home")}" href="index.html">Dashboard</a></li><li class="nav-item"><a class="nav-link ${isActive("page-organisasi")}" href="organisasi.html">Organisasi</a></li><li class="nav-item"><a class="nav-link ${isActive("page-alumni")}" href="alumni.html">Direktori</a></li><li class="nav-item"><a class="nav-link ${isActive("page-loker")}" href="loker.html">Bursa Kerja</a></li>`;
   if (user) {
@@ -42,8 +40,6 @@ function renderNavbar() {
 }
 
 function setupDashboard() {
-  // ... (KODE DASHBOARD SAMA PERSIS SEPERTI SEBELUMNYA) ...
-  // Copy dari jawaban sebelumnya
   if (user) {
     $("#welcome-name").text(user.nama.split(" ")[0]);
     $("#banner-btn-container").html(
@@ -118,7 +114,7 @@ function setupDashboard() {
   });
 }
 
-// === FORUM (UPDATE: WARNA KATEGORI & KOMENTAR NAMA) ===
+// Nandi
 function setupForum() {
   loadForum();
   $("#form-thread").submit(function (e) {
@@ -126,7 +122,6 @@ function setupForum() {
     handlePost(this, "post_thread");
   });
 
-  // UPDATE: Kirim parameter 'nama' = user.nama
   $("#form-comment").submit(function (e) {
     e.preventDefault();
     let data =
@@ -159,7 +154,7 @@ function loadForum() {
         else if (i[3] === "Tanya Jawab") badgeClass = "success";
         else if (i[3] === "Diskusi Umum") badgeClass = "primary";
 
-        // Gunakan w-100 agar kartu memenuhi lebar kontainer induk
+        // w-100 agar kartu memenuhi lebar kontainer induk
         html += `
                 <div class="card mb-3 border-0 shadow-sm w-100">
                     <div class="card-body">
@@ -180,7 +175,7 @@ function loadForum() {
   });
 }
 
-// === DIREKTORI (UPDATE: MENAMPILKAN NIM) ===
+// Adi
 function setupDirektori() {
   $.getJSON(API_URL + "?action=get_alumni", function (res) {
     let html = "";
@@ -200,7 +195,6 @@ function setupDirektori() {
             ? `<a href="${alumni.linkedin}" target="_blank" class="btn btn-sm btn-outline-primary w-100 mt-2"><i class="fab fa-linkedin"></i> Connect</a>`
             : "";
 
-        // ADD: NIM DITAMPILKAN DI SINI
         html += `
                 <div class="col-md-4 mb-4 item-alumni animate-up">
                     <div class="card p-3 h-100 text-center border-0 shadow-sm">
@@ -220,7 +214,7 @@ function setupDirektori() {
   });
 }
 
-// === ORGANISASI (UPDATE: NIM PENGURUS & ADMIN EDIT) ===
+// Nandi
 function setupOrganisasi() {
   $.getJSON(API_URL + "?action=get_struktur", function (res) {
     let html = "";
@@ -273,7 +267,7 @@ function setupOrganisasi() {
   }
 }
 
-// UPDATE: EDIT STRUKTUR MENERIMA NIM
+//Nandi
 function editStruktur(id, nama, jabatan, urutan, foto, email, nim) {
   document.getElementById("admin-area").scrollIntoView({ behavior: "smooth" });
   var tab = new bootstrap.Tab(
@@ -304,7 +298,7 @@ function resetFormStruktur() {
   $("#btn-cancel-struktur").hide();
 }
 
-// ... (SISANYA SAMA SEPERTI SEBELUMNYA) ...
+// Hasbi
 function setupLoker() {
   $.getJSON(API_URL + "?action=get_loker", function (res) {
     let html = "";
@@ -329,7 +323,6 @@ function setupLoker() {
           deskripsi = `<div class="p-3 bg-light rounded mt-3 text-center"><small class="text-muted"><i class="fas fa-eye-slash me-1"></i> Rincian disembunyikan.</small></div>`;
         }
 
-        // PERBAIKAN DISINI: Gunakan 'col-12 col-md-6'
         // col-12: Di HP dia ambil 1 baris penuh.
         // col-md-6: Di Laptop dia ambil setengah (2 kolom).
         html += `
@@ -366,6 +359,8 @@ function setupLoker() {
     handlePost(this, "post_loker");
   });
 }
+
+//Adi
 function setupProfil() {
   if (!user) {
     window.location.href = "login.html";
@@ -437,12 +432,16 @@ function logout() {
   localStorage.removeItem("user_alumni");
   window.location.href = "index.html";
 }
+
+//hapus data
 function hapusData(action, id) {
   if (confirm("Hapus?"))
     $.post(API_URL, { action: action, id: id }, function () {
       location.reload();
     });
 }
+
+//Nandi
 function bukaDetail(id, t, a, c) {
   $("#detail-judul").text(t);
   $("#detail-isi").text(c);
@@ -460,6 +459,8 @@ function loadComments(id) {
     $("#comments-list").html(h);
   });
 }
+
+//hasbi
 function bukaBerita(i) {
   let d = globalBerita[i];
   if (d) {
