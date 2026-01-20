@@ -114,6 +114,23 @@ function setupDashboard() {
   });
 }
 
+//adi
+$("#form-profil").submit(function (e) {
+  e.preventDefault();
+  $.post(
+    API_URL,
+    $(this).serialize() + "&action=update_profile",
+    function (res) {
+      if (res.status === "success") {
+        localStorage.setItem("user_alumni", JSON.stringify(res.user));
+        location.reload();
+      } else {
+        alert(res.message);
+      }
+    },
+  );
+});
+
 // Nandi
 function setupForum() {
   loadForum();
