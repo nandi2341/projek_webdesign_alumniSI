@@ -533,3 +533,55 @@ footer {
   text-overflow: ellipsis;
   white-space: normal;
 }
+/* =========================================
+   RESPONSIVE MOBILE FIXES
+   ========================================= */
+
+@media (max-width: 768px) {
+  /* 1. Perbaikan Struktur Organisasi di HP */
+  .org-level {
+    gap: 20px; /* Kurangi jarak antar kartu */
+    margin-bottom: 30px;
+  }
+
+  /* Sembunyikan garis-garis konektor di HP agar tidak berantakan */
+  .org-level::after,
+  .connector-horizontal,
+  .connector-horizontal::before,
+  .org-card::before {
+    display: none !important;
+  }
+
+  /* Pastikan kartu organisasi rata tengah */
+  .org-card {
+    margin: 0 auto;
+    width: 100%; /* Kartu memenuhi lebar layar HP */
+    max-width: 280px; /* Tapi jangan terlalu lebar */
+  }
+
+  /* 2. Perbaikan Banner Halaman Utama */
+  #main-banner {
+    padding: 3rem 1rem !important; /* Kurangi padding banner */
+    text-align: center !important;
+  }
+  #main-banner h1 {
+    font-size: 2rem; /* Kecilkan font judul */
+  }
+
+  /* 3. Perbaikan Search Bar Direktori */
+  .directory-header {
+    padding-bottom: 60px; /* Kurangi padding bawah */
+  }
+  .floating-search {
+    margin-top: -40px;
+    width: 90%; /* Jangan 100% mentok pinggir */
+  }
+
+  /* 4. Perbaikan Modal Gambar */
+  #berita-gambar,
+  #event-gambar,
+  #proker-gambar {
+    height: auto !important; /* Biarkan tinggi menyesuaikan gambar */
+    max-height: 250px;
+  }
+}
