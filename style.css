@@ -221,109 +221,109 @@ footer {
 
 /* 1. Wadah per Level (Baris) */
 .org-level {
-    display: flex;
-    justify-content: center; /* Posisi di tengah */
-    flex-wrap: wrap;         /* Agar responsif turun ke bawah jika layar sempit */
-    gap: 40px;               /* Jarak antar kartu di level yang sama */
-    margin-bottom: 60px;     /* Jarak antar level (atas-bawah) */
-    position: relative;
+  display: flex;
+  justify-content: center; /* Posisi di tengah */
+  flex-wrap: wrap; /* Agar responsif turun ke bawah jika layar sempit */
+  gap: 40px; /* Jarak antar kartu di level yang sama */
+  margin-bottom: 60px; /* Jarak antar level (atas-bawah) */
+  position: relative;
 }
 
 /* 2. Garis Vertikal (Penghubung ke Bawah) */
 /* Membuat garis lurus dari tengah level ini ke level di bawahnya */
 .org-level::after {
-    content: '';
-    position: absolute;
-    bottom: -60px; /* Menjulur ke bawah sejauh margin-bottom */
-    left: 50%;
-    width: 2px;
-    height: 60px;  /* Panjang garis */
-    background-color: #ccc; /* Warna garis abu-abu */
-    z-index: -1;
+  content: "";
+  position: absolute;
+  bottom: -60px; /* Menjulur ke bawah sejauh margin-bottom */
+  left: 50%;
+  width: 2px;
+  height: 60px; /* Panjang garis */
+  background-color: #ccc; /* Warna garis abu-abu */
+  z-index: -1;
 }
 
 /* Hapus garis vertikal pada level paling bawah (karena tidak ada bawahan lagi) */
 .org-level:last-child::after {
-    display: none;
+  display: none;
 }
 
 /* 3. Kartu Pengurus */
 .org-card {
-    width: 220px;          /* Lebar tetap agar rapi */
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08); /* Bayangan halus */
-    padding: 20px;
-    text-align: center;
-    position: relative;
-    z-index: 2;            /* Supaya kartu menutupi garis jika bertumpuk */
-    transition: transform 0.3s ease;
-    border-top: 4px solid var(--primary-color); /* Hiasan warna di atas kartu */
+  width: 220px; /* Lebar tetap agar rapi */
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Bayangan halus */
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  z-index: 2; /* Supaya kartu menutupi garis jika bertumpuk */
+  transition: transform 0.3s ease;
+  border-top: 4px solid var(--primary-color); /* Hiasan warna di atas kartu */
 }
 
 /* Efek saat kartu di-hover */
 .org-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 /* Foto Pengurus Bulat */
 .org-img {
-    width: 90px;
-    height: 90px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 15px;
-    border: 3px solid #f8f9fa;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 3px solid #f8f9fa;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* 4. Garis Horizontal (Penghubung Sesama Level) */
 /* Garis ini muncul di atas level jika ada lebih dari 1 orang (misal Sekretaris & Bendahara) */
 .connector-horizontal {
-    position: absolute;
-    top: -30px; /* Mundur ke atas */
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 220px); /* Lebar garis menyesuaikan jumlah kartu */
-    max-width: 600px;
-    height: 2px;
-    background-color: #ccc;
-    display: none; /* Default mati */
+  position: absolute;
+  top: -30px; /* Mundur ke atas */
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 220px); /* Lebar garis menyesuaikan jumlah kartu */
+  max-width: 600px;
+  height: 2px;
+  background-color: #ccc;
+  display: none; /* Default mati */
 }
 
 /* Garis vertikal kecil naik ke atas dari tengah garis horizontal */
 .connector-horizontal::before {
-    content: '';
-    position: absolute;
-    top: -30px; /* Naik ke level atasnya */
-    left: 50%;
-    width: 2px;
-    height: 30px;
-    background-color: #ccc;
+  content: "";
+  position: absolute;
+  top: -30px; /* Naik ke level atasnya */
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background-color: #ccc;
 }
 
 /* Aktifkan garis horizontal jika level punya class 'has-siblings' (diatur via JS) */
 .has-siblings .connector-horizontal {
-    display: block;
+  display: block;
 }
 
 /* Garis kecil di atas setiap kartu (untuk nyambung ke garis horizontal) */
 .org-card::before {
-    content: '';
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    width: 2px;
-    height: 30px;
-    background-color: #ccc;
-    z-index: -1;
+  content: "";
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  width: 2px;
+  height: 30px;
+  background-color: #ccc;
+  z-index: -1;
 }
 
 /* Hapus garis atas khusus untuk Ketua (Level 1 / Level Paling Atas) */
 .org-level:first-child .org-card::before,
 .org-level:first-child .connector-horizontal {
-    display: none !important;
+  display: none !important;
 }
 
 /* =========================================
@@ -332,79 +332,204 @@ footer {
 
 /* Desain Header Khusus Direktori */
 .directory-header {
-    background: linear-gradient(135deg, var(--primary-color) 0%, #002447 100%);
-    padding: 80px 0 100px; /* Bawah dilebihkan untuk search bar */
-    color: white;
-    text-align: center;
-    border-bottom-left-radius: 30px;
-    border-bottom-right-radius: 30px;
-    margin-bottom: 40px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, #002447 100%);
+  padding: 80px 0 100px; /* Bawah dilebihkan untuk search bar */
+  color: white;
+  text-align: center;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-bottom: 40px;
 }
 
 /* Search Bar Melayang */
 .floating-search {
-    margin-top: -60px; /* Naik ke atas menutupi header */
-    background: white;
-    padding: 10px;
-    border-radius: 50px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    max-width: 700px;
-    margin-left: auto;
-    margin-right: auto;
+  margin-top: -60px; /* Naik ke atas menutupi header */
+  background: white;
+  padding: 10px;
+  border-radius: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Input Search Custom */
 .floating-search .form-control {
-    border: none;
-    box-shadow: none;
+  border: none;
+  box-shadow: none;
 }
 .floating-search .input-group-text {
-    background: white;
-    border: none;
+  background: white;
+  border: none;
 }
 
 /* Kartu Alumni Modern */
 .alumni-card {
-    border: none;
-    border-radius: 15px;
-    background: #fff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    position: relative;
-    padding-top: 20px;
-    height: 100%; /* Agar tinggi kartu seragam */
+  border: none;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+  padding-top: 20px;
+  height: 100%; /* Agar tinggi kartu seragam */
 }
 
 .alumni-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
 }
 
 /* Garis Warna di Atas Kartu */
 .alumni-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 5px;
-    background: linear-gradient(to right, #0d6efd, #0dcaf0);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(to right, #0d6efd, #0dcaf0);
 }
 
 /* Wrapper Foto Bulat */
 .alumni-img-wrapper {
-    width: 100px; 
-    height: 100px;
-    margin: 0 auto 15px;
-    padding: 4px;
-    background: white;
-    border: 2px solid #e9ecef;
-    border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 15px;
+  padding: 4px;
+  background: white;
+  border: 2px solid #e9ecef;
+  border-radius: 50%;
 }
 
 /* Foto Alumni */
 .alumni-img {
-    width: 100%; 
-    height: 100%;
-    object-fit: cover;
-    border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* --- MODERN UI UPGRADES --- */
+
+/* 1. Global Gradient & Shadows */
+.bg-gradient-primary {
+  background: linear-gradient(135deg, #0d6efd 0%, #0043a8 100%);
+}
+.shadow-hover {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.shadow-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 30px rgba(13, 110, 253, 0.15) !important;
+}
+
+/* 2. Agenda / Event Card Modern */
+.event-card {
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+}
+.event-date-badge {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px;
+  padding: 8px 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+  min-width: 60px;
+}
+.event-img-wrapper {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+}
+.event-img-wrapper img {
+  transition: transform 0.5s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.event-card:hover .event-img-wrapper img {
+  transform: scale(1.1);
+}
+
+/* 3. Forum Card Modern */
+.forum-card {
+  border-left: 5px solid transparent;
+  transition: all 0.2s;
+}
+.forum-card:hover {
+  border-left-color: var(--primary-color);
+  background-color: #f8faff;
+}
+.forum-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #495057;
+}
+
+/* 4. Proker Card (Grid View pengganti Table) */
+.proker-card {
+  border-radius: 15px;
+  border: 1px solid #eee;
+  background: #fff;
+}
+.proker-status-pill {
+  padding: 5px 15px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.status-success {
+  background: #d1e7dd;
+  color: #0f5132;
+}
+.status-primary {
+  background: #cfe2ff;
+  color: #084298;
+}
+.status-secondary {
+  background: #e2e3e5;
+  color: #41464b;
+}
+
+/* 5. Organisasi Card Polish */
+.org-card {
+  border-top: none !important; /* Reset style lama */
+  border-bottom: 4px solid var(--primary-color);
+  border-radius: 20px;
+}
+.org-role-badge {
+  background: linear-gradient(45deg, #0d6efd, #0dcaf0);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  margin-bottom: 10px;
+  display: inline-block;
+}
+/* --- TAMBAHAN UNTUK MEMPERBAIKI TEKS FORUM --- */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3; /* <--- Tambahkan baris ini untuk menghilangkan warning */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }

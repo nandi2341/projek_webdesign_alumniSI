@@ -1,75 +1,152 @@
 <!doctype html>
 <html lang="id">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agenda - ILUNI SI UNIKU</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
-</head>
-<body id="page-event">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
-                <img src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true" width="35" class="me-2"/>
-                <span>ILUNI SI UNIKU</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto align-items-center" id="dynamic-nav"></ul></div>
+  </head>
+  <body id="page-event">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4">
+      <div class="container">
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center"
+          href="index.html"
+        >
+          <img
+            src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true"
+            width="35"
+            class="me-2"
+          />
+          <span>ILUNI SI UNIKU</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul
+            class="navbar-nav ms-auto align-items-center"
+            id="dynamic-nav"
+          ></ul>
         </div>
+      </div>
     </nav>
 
     <main class="container py-4">
-        <h2 class="fw-bold mb-4 text-center">Agenda Kegiatan</h2>
-        <div class="row" id="event-full-container">
-            <p class="text-center text-muted">Memuat agenda...</p>
+      <div class="text-center mb-5 animate-up">
+        <h2 class="fw-bold">Agenda Kegiatan</h2>
+        <p class="text-muted">
+          Jangan lewatkan momen penting bersama keluarga besar Sistem Informasi.
+        </p>
+      </div>
+
+      <div class="row g-4" id="event-full-container">
+        <div class="col-12 text-center py-5">
+          <div class="spinner-border text-primary"></div>
+          <p class="mt-2 text-muted">Memuat agenda...</p>
         </div>
+      </div>
     </main>
 
-    <footer style="background: url('https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg') no-repeat center center; background-size: cover; padding: 0;">
-        <div style="background-color: rgba(0, 0, 0, 0.8); padding: 40px 0; width: 100%; height: 100%;">
-            <div class="container text-center text-white">
-                <h5 class="mb-0 fw-bold">ILUNI SI UNIKU</h5>
-                <p class="small text-white-50 mb-0">&copy; 2026 Universitas Kuningan.</p>
-            </div>
+    <footer
+      style="
+        background: url(&quot;https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg&quot;)
+          no-repeat center center;
+        background-size: cover;
+        padding: 0;
+      "
+    >
+      <div
+        style="
+          background-color: rgba(0, 0, 0, 0.8);
+          padding: 40px 0;
+          width: 100%;
+          height: 100%;
+        "
+      >
+        <div class="container text-center text-white">
+          <h5 class="mb-0 fw-bold">ILUNI SI UNIKU</h5>
+          <p class="small text-white-50 mb-0">
+            &copy; 2026 Universitas Kuningan.
+          </p>
         </div>
+      </div>
     </footer>
 
     <div class="modal fade" id="modalEvent" tabindex="-1">
-    <div class="modal-dialog modal-lg"> <div class="modal-content">
-            <div class="modal-header bg-danger text-white">
-                <h5 class="modal-title fw-bold">Detail Agenda</h5>
-                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body p-4">
-                <img src="" id="event-gambar" class="img-fluid rounded w-100 mb-3" style="max-height: 350px; object-fit: cover; display: none;">
-                
-                <h4 id="event-judul" class="fw-bold mb-3 text-dark"></h4>
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-2">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-calendar-alt text-danger me-3 fs-5"></i>
-                            <div><small class="text-muted d-block">Tanggal</small><span id="event-tanggal" class="fw-bold"></span></div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="d-flex align-items-center">
-                            <i class="fas fa-map-marker-alt text-danger me-3 fs-5"></i>
-                            <div><small class="text-muted d-block">Lokasi</small><span id="event-lokasi" class="fw-bold"></span></div>
-                        </div>
-                    </div>
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header bg-gradient-primary text-white border-0">
+            <h5 class="modal-title fw-bold">Detail Agenda</h5>
+            <button
+              type="button"
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-0">
+            <img
+              src=""
+              id="event-gambar"
+              class="img-fluid w-100"
+              style="max-height: 350px; object-fit: cover; display: none"
+            />
+            <div class="p-4">
+              <h3 id="event-judul" class="fw-bold mb-3 text-dark"></h3>
+              <div
+                class="d-flex flex-wrap gap-4 mb-4 text-muted border-bottom pb-3"
+              >
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-calendar-alt text-primary me-2 fs-5"></i>
+                  <div>
+                    <small class="d-block fw-bold text-dark">Tanggal</small
+                    ><span id="event-tanggal"></span>
+                  </div>
                 </div>
-                <h6 class="border-bottom pb-2 mb-2 text-secondary">Deskripsi Kegiatan</h6>
-                <div id="event-deskripsi" class="text-muted" style="line-height: 1.6"></div>
+                <div class="d-flex align-items-center">
+                  <i class="fas fa-map-marker-alt text-danger me-2 fs-5"></i>
+                  <div>
+                    <small class="d-block fw-bold text-dark">Lokasi</small
+                    ><span id="event-lokasi"></span>
+                  </div>
+                </div>
+              </div>
+              <h6 class="fw-bold mb-2">Deskripsi</h6>
+              <div
+                id="event-deskripsi"
+                class="text-secondary"
+                style="line-height: 1.8"
+              ></div>
             </div>
-            <div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button></div>
+          </div>
+          <div class="modal-footer border-0 bg-light">
+            <button
+              type="button"
+              class="btn btn-secondary rounded-pill px-4"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-</div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

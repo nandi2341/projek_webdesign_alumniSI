@@ -1,85 +1,156 @@
 <!doctype html>
 <html lang="id">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Program Kerja - ILUNI SI UNIKU</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <link rel="stylesheet" href="style.css" />
-</head>
-<body id="page-proker">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
-                <img src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true" width="35" class="me-2"/>
-                <span>ILUNI SI UNIKU</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto align-items-center" id="dynamic-nav"></ul></div>
+  </head>
+  <body id="page-proker">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top mb-4">
+      <div class="container">
+        <a
+          class="navbar-brand fw-bold d-flex align-items-center"
+          href="index.html"
+        >
+          <img
+            src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true"
+            width="35"
+            class="me-2"
+          />
+          <span>ILUNI SI UNIKU</span>
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul
+            class="navbar-nav ms-auto align-items-center"
+            id="dynamic-nav"
+          ></ul>
         </div>
+      </div>
     </nav>
 
     <main class="container py-4">
-        <h2 class="fw-bold mb-4 text-center">Program Kerja</h2>
-        <div class="table-responsive shadow-sm rounded">
-            <table class="table table-hover table-striped mb-0">
-                <thead class="table-primary">
-                    <tr>
-                        <th style="width: 25%;">Program</th>
-                        <th>Deskripsi</th>
-                        <th style="width: 20%;">Penanggung Jawab</th>
-                        <th style="width: 15%;">Status</th>
-                        <th style="width: 10%;">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody id="proker-full-container">
-                    <tr><td colspan="5" class="text-center">Memuat data...</td></tr>
-                </tbody>
-            </table>
+      <div
+        class="d-flex justify-content-between align-items-end mb-4 animate-up"
+      >
+        <div>
+          <h2 class="fw-bold mb-1">Program Kerja</h2>
+          <p class="text-muted mb-0">
+            Transparansi kegiatan dan progres organisasi.
+          </p>
         </div>
+      </div>
+
+      <div class="row g-4" id="proker-full-container">
+        <div class="col-12 text-center text-muted py-5">
+          <div class="spinner-border text-primary"></div>
+          <p class="mt-2">Memuat program kerja...</p>
+        </div>
+      </div>
     </main>
 
-    <footer style="background: url('https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg') no-repeat center center; background-size: cover; padding: 0;">
-        <div style="background-color: rgba(0, 0, 0, 0.8); padding: 40px 0; width: 100%; height: 100%;">
-            <div class="container text-center text-white">
-                <h5 class="mb-0 fw-bold">ILUNI SI UNIKU</h5>
-                <p class="small text-white-50 mb-0">&copy; 2026 Universitas Kuningan.</p>
-            </div>
+    <footer
+      style="
+        background: url(&quot;https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg&quot;)
+          no-repeat center center;
+        background-size: cover;
+        padding: 0;
+      "
+    >
+      <div
+        style="
+          background-color: rgba(0, 0, 0, 0.8);
+          padding: 40px 0;
+          width: 100%;
+          height: 100%;
+        "
+      >
+        <div class="container text-center text-white">
+          <h5 class="mb-0 fw-bold">ILUNI SI UNIKU</h5>
+          <p class="small text-white-50 mb-0">
+            &copy; 2026 Universitas Kuningan.
+          </p>
         </div>
+      </div>
     </footer>
 
     <div class="modal fade" id="modalProkerDetail" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header border-0 pb-0">
-                    <h5 class="modal-title fw-bold" id="proker-judul">Detail Program</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <img src="" id="proker-gambar" class="img-fluid rounded w-100 mb-3" style="max-height: 350px; object-fit: cover; display: none;">
-                    <hr class="my-4 opacity-10">
-                    
-                    <h5 class="fw-bold text-primary">Deskripsi</h5>
-                    <p id="proker-isi" class="text-muted" style="line-height: 1.8; text-align: justify;"></p>
-                    
-                    <div class="alert alert-light border mt-4">
-                        <small class="fw-bold d-block text-dark">Penanggung Jawab:</small>
-                        <span id="proker-pj-detail">-</span>
-                        <br>
-                        <small class="fw-bold d-block text-dark mt-2">Status:</small>
-                        <span id="proker-status-detail" class="badge bg-secondary">Rencana</span>
-                    </div>
-                </div>
-                <div class="modal-footer border-0 pt-0">
-                    <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
-                </div>
+      <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content border-0 shadow">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold" id="proker-judul">
+              Detail Program
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <img
+              src=""
+              id="proker-gambar"
+              class="img-fluid rounded w-100 mb-3 shadow-sm"
+              style="max-height: 350px; object-fit: cover; display: none"
+            />
+
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <span
+                class="badge bg-light text-dark border px-3 py-2"
+                id="proker-status-detail"
+                >Rencana</span
+              >
             </div>
+
+            <h5 class="fw-bold text-primary mb-3">Deskripsi Kegiatan</h5>
+            <p
+              id="proker-isi"
+              class="text-secondary"
+              style="line-height: 1.8; text-align: justify"
+            ></p>
+
+            <div
+              class="bg-light p-3 rounded mt-4 border-start border-4 border-primary"
+            >
+              <small
+                class="fw-bold d-block text-dark text-uppercase letter-spacing-1"
+                >Penanggung Jawab</small
+              >
+              <span id="proker-pj-detail" class="fs-5">-</span>
+            </div>
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button
+              type="button"
+              class="btn btn-secondary rounded-pill px-4"
+              data-bs-dismiss="modal"
+            >
+              Tutup
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
