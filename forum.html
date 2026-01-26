@@ -1,191 +1,100 @@
 <!doctype html>
 <html lang="id">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Forum Diskusi - ILUSI UNIKU</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <title>Forum Diskusi - ILUNI SI UNIKU</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="style.css" />
-  </head>
-  <body id="page-forum">
+</head>
+<body id="page-forum">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
-      <div class="container">
-        <a
-          class="navbar-brand fw-bold d-flex align-items-center"
-          href="index.html"
-        >
-          <img
-            src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true"
-            width="35"
-            class="me-2"
-          />
-          <span>ILUSI UNIKU</span>
-        </a>
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul
-            class="navbar-nav ms-auto align-items-center"
-            id="dynamic-nav"
-          ></ul>
+        <div class="container">
+            <a class="navbar-brand fw-bold d-flex align-items-center" href="index.html">
+                <img src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true" width="35" class="me-2"/>
+                <span>ILUNI SI UNIKU</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav"><ul class="navbar-nav ms-auto align-items-center" id="dynamic-nav"></ul></div>
         </div>
-      </div>
     </nav>
 
     <main class="container py-4">
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="fw-bold">Forum Diskusi</h2>
-        <button
-          class="btn btn-primary"
-          data-bs-toggle="modal"
-          data-bs-target="#modalThread"
-        >
-          <i class="fas fa-plus"></i> Topik Baru
-        </button>
-      </div>
-
-      <div id="forum-container" class="row">
-        <p class="text-center text-muted">Memuat diskusi...</p>
-      </div>
-
-      <div class="modal fade" id="modalThread">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Topik Baru</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <form id="form-thread">
-                <input
-                  type="text"
-                  name="judul"
-                  class="form-control mb-2"
-                  placeholder="Judul"
-                  required
-                />
-                <select name="kategori" class="form-select mb-2">
-                  <option>Diskusi Umum</option>
-                  <option>Tanya Jawab</option>
-                  <option>Info Event</option>
-                </select>
-                <textarea
-                  name="isi"
-                  class="form-control mb-2"
-                  rows="3"
-                  placeholder="Isi pesan..."
-                  required
-                ></textarea>
-                <button type="submit" class="btn btn-primary w-100">
-                  Kirim
-                </button>
-              </form>
-            </div>
-          </div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold"><i class="fas fa-comments text-primary me-2"></i>Forum Diskusi</h2>
+            <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalThread">
+                <i class="fas fa-plus me-2"></i> Topik Baru
+            </button>
         </div>
-      </div>
 
-      <div class="modal fade" id="modalDetail">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Diskusi</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <div class="p-3 bg-light rounded mb-3">
-                <h4 id="detail-judul">Loading...</h4>
-                <small class="text-muted" id="detail-info">-</small>
-                <p class="mt-2" id="detail-isi">-</p>
-              </div>
-              <h6 class="border-bottom pb-2">Komentar</h6>
-              <div
-                id="comments-list"
-                class="mb-4"
-                style="max-height: 300px; overflow-y: auto"
-              ></div>
-              <form id="form-comment">
-                <input type="hidden" name="id_thread" id="current-thread-id" />
-                <div class="input-group">
-                  <input
-                    type="text"
-                    name="isi"
-                    class="form-control"
-                    placeholder="Tulis balasan..."
-                    required
-                  />
-                  <button class="btn btn-primary" type="submit">Kirim</button>
+        <div id="forum-container" class="row">
+            <p class="text-center text-muted">Memuat diskusi...</p>
+        </div>
+
+        <div class="modal fade" id="modalThread">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary text-white">
+                        <h5 class="modal-title">Buat Topik Diskusi</h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-thread">
+                            <input type="text" name="judul" class="form-control mb-3" placeholder="Judul Topik" required />
+                            <select name="kategori" class="form-select mb-3">
+                                <option>Diskusi Umum</option>
+                                <option>Tanya Jawab</option>
+                                <option>Info Event</option>
+                            </select>
+                            <textarea name="isi" class="form-control mb-3" rows="4" placeholder="Tulis pesan Anda..." required></textarea>
+                            <button type="submit" class="btn btn-primary w-100">Kirim Topik</button>
+                        </form>
+                    </div>
                 </div>
-              </form>
             </div>
-          </div>
         </div>
-      </div>
+
+        <div class="modal fade" id="modalDetail">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header border-0 pb-0">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body p-4">
+                        <div class="p-4 bg-light rounded-3 mb-4 border">
+                            <h4 id="detail-judul" class="fw-bold text-dark mb-2">Loading...</h4>
+                            <p class="mt-2 text-secondary" id="detail-isi" style="white-space: pre-line;">-</p>
+                        </div>
+                        
+                        <h6 class="fw-bold mb-3"><i class="fas fa-reply me-2"></i>Komentar</h6>
+                        <div id="comments-list" class="mb-4" style="max-height: 300px; overflow-y: auto;">
+                            </div>
+                        
+                        <form id="form-comment" class="mt-3">
+                            <input type="hidden" name="id_thread" id="current-thread-id" />
+                            <div class="input-group">
+                                <input type="text" name="isi" class="form-control" placeholder="Tulis balasan..." required />
+                                <button class="btn btn-primary px-4" type="submit"><i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-    <footer
-      style="
-        background: url(&quot;https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg&quot;)
-          no-repeat center center;
-        background-size: cover;
-        padding: 0;
-      "
-    >
-      <div
-        style="
-          background-color: rgba(0, 0, 0, 0.8);
-          padding: 40px 0;
-          width: 100%;
-          height: 100%;
-        "
-      >
-        <div class="container text-center text-white">
-          <div class="d-flex align-items-center justify-content-center mb-3">
-            <img
-              src="https://github.com/nandi2341/praktikum_webdesain/blob/main/20230329_051749.png?raw=true"
-              alt="Logo"
-              width="40"
-              class="me-2"
-              style="filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))"
-            />
-            <h5 class="mb-0 fw-bold">ILUSI UNIKU</h5>
-          </div>
-
-          <p class="small text-white-50 mb-3">
-            Jalan Pramuka No.67, Purwawinangun, <br />
-            Kuningan, Kabupaten Kuningan, Jawa Barat 45512
-          </p>
-
-          <hr class="border-secondary mx-auto" style="width: 50%" />
-          <p class="small text-white-50 mb-0">
-            &copy; 2026 Universitas Kuningan.
-          </p>
+    <footer style="background: url('https://fkom.uniku.ac.id/wp-content/uploads/2023/01/Header-Home.jpg') no-repeat center center; background-size: cover; padding: 0;">
+        <div style="background-color: rgba(0, 0, 0, 0.8); padding: 40px 0; width: 100%; height: 100%;">
+            <div class="container text-center text-white">
+                <h5 class="mb-0 fw-bold">ILUNI SI UNIKU</h5>
+                <p class="small text-white-50 mb-0">&copy; 2026 Universitas Kuningan.</p>
+            </div>
         </div>
-      </div>
     </footer>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
