@@ -123,13 +123,16 @@ function setupDashboard() {
       res.data.slice(0, 3).forEach((evt, i) => {
         let adminBtn = "";
         if (user && user.role === "admin") {
-          adminBtn = `<button onclick="goToEditEvent(${i})" class="btn btn-sm btn-link text-warning p-0 ms-2" title="Edit Agenda"><i class="fas fa-edit"></i></button>`;
+          let editBtn = `<button onclick="goToEditBerita(${index})" class="btn btn-sm btn-warning position-absolute top-0 end-0 mt-2 me-5 shadow rounded-circle text-white" style="width:30px;height:30px;padding:0;z-index:10;" title="Edit"><i class="fas fa-edit"></i></button>`;
+          let delBtn = `<button onclick="hapusData('delete_berita','${news[0]}')" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 shadow rounded-circle" style="width:30px;height:30px;padding:0;z-index:10;" title="Hapus"><i class="fas fa-trash"></i></button>`;
+          adminBtn = editBtn + delBtn;
         }
         html += `<li class="list-group-item p-3 border-0 border-bottom"><div class="d-flex justify-content-between align-items-start"><div><h6 class="mb-1 fw-bold text-dark text-truncate" style="max-width: 200px;">${evt[1]} ${adminBtn}</h6><small class="text-muted"><i class="fas fa-map-marker-alt text-danger me-1"></i> ${evt[3]}</small></div><div class="text-end bg-light rounded p-1 px-2"><small class="text-danger fw-bold d-block">${new Date(evt[2]).toLocaleDateString("id-ID", { day: "numeric", month: "short" })}</small></div></div><button class="btn btn-sm btn-light text-primary w-100 mt-2 fw-bold btn-view-event rounded-pill" data-index="${i}" style="font-size:0.8rem;">Info <i class="fas fa-arrow-right ms-1"></i></button></li>`;
       });
     $("#home-events-container").html(html);
   });
 
+  // Dashboard Widget: Berita
   $.getJSON(API_URL + "?action=get_berita", function (res) {
     globalBerita = res.data || [];
     let html = !globalBerita.length
@@ -140,15 +143,25 @@ function setupDashboard() {
       globalBerita.forEach((news, index) => {
         let imgUrl =
           news[5] || "https://via.placeholder.com/400x200?text=Berita+SI";
+
+        // --- PERBAIKAN TOMBOL ADMIN DI SINI ---
         let adminBtn = "";
         if (user && user.role === "admin") {
-          adminBtn = `<button onclick="hapusData('delete_berita','${news[0]}')" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 shadow rounded-circle" style="width:30px;height:30px;padding:0;z-index:10;"><i class="fas fa-trash"></i></button>`;
+          // 1. Tombol Edit (Kuning) - Posisinya digeser ke kiri (me-5) biar gak numpuk
+          let editBtn = `<button onclick="goToEditBerita(${index})" class="btn btn-sm btn-warning position-absolute top-0 end-0 mt-2 me-5 shadow rounded-circle text-white" style="width:30px;height:30px;padding:0;z-index:10;" title="Edit"><i class="fas fa-edit"></i></button>`;
+
+          // 2. Tombol Hapus (Merah)
+          let delBtn = `<button onclick="hapusData('delete_berita','${news[0]}')" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 shadow rounded-circle" style="width:30px;height:30px;padding:0;z-index:10;" title="Hapus"><i class="fas fa-trash"></i></button>`;
+
+          // Gabungkan keduanya
+          adminBtn = editBtn + delBtn;
         }
+        // ---------------------------------------
 
         html += `
               <div class="news-slide-item">
                   <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
-                      ${adminBtn}
+                      ${adminBtn} 
                       <img src="${imgUrl}" class="card-img-top" style="height:180px; object-fit:cover;">
                       <div class="card-body d-flex flex-column p-3">
                           <div class="d-flex justify-content-between mb-2">
@@ -417,6 +430,31 @@ function checkEditRedirects() {
       .addClass("btn-warning");
     $("#btn-cancel-event").show();
     localStorage.removeItem("edit_event_data");
+    document.getElementById("admin-area").scrollIntoView();
+  }
+
+  let editBerita = localStorage.getItem("edit_berita_data");
+  if (editBerita) {
+    let data = JSON.parse(editBerita);
+    // Buka Tab Berita
+    var tab = new bootstrap.Tab(
+      document.querySelector('#adminTab button[data-bs-target="#tab-berita"]'),
+    );
+    tab.show();
+
+    $("#berita-id").val(data[0]);
+    $("#berita-judul-input").val(data[2]);
+    $("#berita-kategori").val(data[3]);
+    $("#berita-isi-input").val(data[4]);
+    $("#berita-gambar-input").val(data[5]);
+
+    $("#btn-save-berita")
+      .text("Update Berita")
+      .removeClass("btn-danger")
+      .addClass("btn-warning");
+    $("#btn-cancel-berita").show();
+
+    localStorage.removeItem("edit_berita_data");
     document.getElementById("admin-area").scrollIntoView();
   }
 }
@@ -1081,3 +1119,8 @@ function kembaliKeKategori() {
     if (checkCount > 5) clearInterval(checkInterval);
   }, 1000);
 })();
+
+function goToEditBerita(index) {
+  localStorage.setItem("edit_berita_data", JSON.stringify(globalBerita[index]));
+  window.location.href = "organisasi.html";
+}
