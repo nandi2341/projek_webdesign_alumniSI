@@ -583,22 +583,21 @@ footer {
 }
 
 @media (max-width: 768px) {
+  /* 1. Perbaikan Banner */
   #main-banner {
-    padding: 3rem 1rem !important;
+    padding: 2rem 1rem !important;
     text-align: center !important;
   }
-
   #main-banner h1 {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
 
   .directory-header {
     padding-bottom: 60px;
   }
-
   .floating-search {
     margin-top: -40px;
-    width: 90%;
+    width: 95%;
   }
 
   #berita-gambar,
@@ -612,22 +611,29 @@ footer {
     gap: 20px;
     margin-bottom: 30px;
   }
-
   .org-level::after,
   .connector-horizontal,
   .connector-horizontal::before,
   .org-card::before {
     display: none !important;
   }
-
   .org-card {
     margin: 0 auto;
     width: 100%;
-    max-width: 280px;
+    max-width: 100%;
+  }
+
+  .news-slider-container {
+    scroll-snap-type: x mandatory;
+    gap: 15px;
+    padding-bottom: 20px;
   }
 
   .news-slide-item {
-    min-width: 90%;
-    max-width: 90%;
+    min-width: 100%;
+    max-width: 100%;
+
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
   }
 }
