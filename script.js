@@ -1,12 +1,6 @@
-// =========================================================
-// KONFIGURASI API (WAJIB DIGANTI DENGAN URL DEPLOY ANDA)
-// =========================================================
 const API_URL =
   "https://script.google.com/macros/s/AKfycbyMHadiPAAYFjvB5r-xk0VjJuqYNZJPQT81DG7hb-1385Zwxz-q_5TMg0Bh7AkaU4vG8A/exec";
 
-// =========================================================
-// GLOBAL VARIABLES & SETUP
-// =========================================================
 const user = JSON.parse(localStorage.getItem("user_alumni"));
 const pageId = $("body").attr("id");
 
@@ -17,7 +11,6 @@ let allLokerData = [];
 let globalStruktur = [];
 let allAlumniData = [];
 
-// Kategori Loker untuk Filter
 const KATEGORI_LOKER = [
   {
     name: "Teknologi dan pengembangan sistem",
@@ -37,7 +30,6 @@ const KATEGORI_LOKER = [
 $(document).ready(function () {
   renderNavbar();
 
-  // Routing Halaman Sederhana
   if (pageId === "page-home") setupDashboard();
   if (pageId === "page-organisasi") setupOrganisasi();
   if (pageId === "page-proker") setupProkerPage();
@@ -52,7 +44,6 @@ $(document).ready(function () {
 
   setupAuthForms();
 
-  // Event Delegates untuk tombol View di Dashboard
   $(document).on("click", ".btn-view-event", function () {
     bukaEvent($(this).data("index"));
   });
@@ -61,9 +52,6 @@ $(document).ready(function () {
   });
 });
 
-// =========================================================
-// NAVBAR RENDERER
-// =========================================================
 function renderNavbar() {
   let isActive = (id) => (pageId === id ? "active fw-bold" : "");
   let html = `
@@ -93,9 +81,6 @@ function renderNavbar() {
   $("#dynamic-nav").html(html);
 }
 
-// =========================================================
-// 1. DASHBOARD HOME
-// =========================================================
 function setupDashboard() {
   if (user) {
     $("#welcome-name").text(user.nama.split(" ")[0]);
@@ -109,7 +94,6 @@ function setupDashboard() {
     );
   }
 
-  // Ambil Banner Settings
   $.getJSON(API_URL + "?action=get_settings", function (res) {
     if (
       res.status === "success" &&
@@ -129,7 +113,6 @@ function setupDashboard() {
     }
   });
 
-  // Dashboard Widget: Events (Versi Mini)
   $.getJSON(API_URL + "?action=get_events", function (res) {
     globalEvents = res.data || [];
     let html =
@@ -147,26 +130,44 @@ function setupDashboard() {
     $("#home-events-container").html(html);
   });
 
-  // Dashboard Widget: Berita
   $.getJSON(API_URL + "?action=get_berita", function (res) {
     globalBerita = res.data || [];
     let html = !globalBerita.length
-      ? '<div class="col-12 text-center text-muted">Belum ada berita.</div>'
+      ? '<div class="w-100 text-center text-muted py-4">Belum ada berita.</div>'
       : "";
-    if (globalBerita.length)
-      globalBerita.slice(0, 3).forEach((news, index) => {
+
+    if (globalBerita.length) {
+      globalBerita.forEach((news, index) => {
         let imgUrl =
           news[5] || "https://via.placeholder.com/400x200?text=Berita+SI";
         let adminBtn = "";
         if (user && user.role === "admin") {
-          adminBtn = `<button onclick="hapusData('delete_berita','${news[0]}')" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 shadow rounded-circle" style="width:30px;height:30px;padding:0;"><i class="fas fa-trash"></i></button>`;
+          adminBtn = `<button onclick="hapusData('delete_berita','${news[0]}')" class="btn btn-sm btn-danger position-absolute top-0 end-0 m-2 shadow rounded-circle" style="width:30px;height:30px;padding:0;z-index:10;"><i class="fas fa-trash"></i></button>`;
         }
-        html += `<div class="col-md-4"><div class="card h-100 shadow-sm border-0 position-relative hover-lift overflow-hidden">${adminBtn}<img src="${imgUrl}" class="card-img-top" style="height:200px; object-fit:cover;"><div class="card-body d-flex flex-column"><div class="d-flex justify-content-between mb-2"><span class="badge bg-primary rounded-pill">${news[3]}</span><small class="text-muted">${new Date(news[1]).toLocaleDateString()}</small></div><h5 class="card-title fw-bold text-truncate">${news[2]}</h5><p class="card-text small text-muted text-truncate">${news[4]}</p><div class="mt-auto"><button class="btn btn-sm btn-outline-primary mt-2 w-100 btn-view-berita rounded-pill" data-index="${index}">Baca Selengkapnya</button></div></div></div></div>`;
+
+        html += `
+              <div class="news-slide-item">
+                  <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
+                      ${adminBtn}
+                      <img src="${imgUrl}" class="card-img-top" style="height:180px; object-fit:cover;">
+                      <div class="card-body d-flex flex-column p-3">
+                          <div class="d-flex justify-content-between mb-2">
+                              <span class="badge bg-primary bg-opacity-10 text-primary px-2 py-1 rounded-pill" style="font-size:0.7rem">${news[3]}</span>
+                              <small class="text-muted" style="font-size:0.75rem">${new Date(news[1]).toLocaleDateString()}</small>
+                          </div>
+                          <h6 class="card-title fw-bold text-dark text-truncate mb-1">${news[2]}</h6>
+                          <p class="card-text small text-muted text-truncate mb-3">${news[4]}</p>
+                          <div class="mt-auto">
+                              <button class="btn btn-sm btn-outline-primary w-100 rounded-pill btn-view-berita" data-index="${index}">Baca Selengkapnya</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>`;
       });
+    }
     $("#home-berita-container").html(html);
   });
 
-  // Dashboard Widget: Loker Summary
   $.getJSON(API_URL + "?action=get_loker", function (res) {
     let html =
       !res.data || res.data.length === 0
@@ -184,9 +185,6 @@ function setupDashboard() {
   });
 }
 
-// =========================================================
-// 2. EVENT PAGE (AGENDA) - MODERN GRID
-// =========================================================
 function setupEventPage() {
   $("#event-full-container").html(
     '<div class="col-12 text-center py-5"><div class="spinner-border text-primary"></div></div>',
@@ -208,7 +206,6 @@ function setupEventPage() {
         let tgl = tglObj.getDate();
         let bln = tglObj.toLocaleDateString("id-ID", { month: "short" });
 
-        // Admin Controls
         let adminControls = "";
         if (user && user.role === "admin") {
           adminControls = `
@@ -250,19 +247,12 @@ function goToEditEvent(index) {
   window.location.href = "organisasi.html";
 }
 
-// =========================================================
-// 3. ORGANISASI & PROKER (ADMIN PANEL & VISUALISASI)
-// =========================================================
 function setupOrganisasi() {
-  // Render Struktur Tree
   $.getJSON(API_URL + "?action=get_struktur", function (res) {
     let container = $("#struktur-tree-container");
     container.empty();
 
-    // SIMPAN DATA KE GLOBAL VARIABLE AGAR BISA DIPAKAI DI PROKER
     globalStruktur = res.data || [];
-
-    // PANGGIL FUNGSI ISI DROPDOWN
     populatePJDropdown();
 
     if (!res.data || res.data.length === 0) {
@@ -272,7 +262,6 @@ function setupOrganisasi() {
       return;
     }
 
-    // ... (Kode render tree ke bawah tetap sama seperti sebelumnya) ...
     let levels = {};
     res.data.forEach((item) => {
       let lvl = item[4];
@@ -307,7 +296,6 @@ function setupOrganisasi() {
                     <div class="org-role-badge shadow-sm mb-2">${i[2]}</div>
                     <h6 class="fw-bold text-dark mb-0">${i[1]}</h6>
                     <small class="text-muted d-block mb-3" style="font-size:0.75rem">${i[6] || "NIM: -"}</small>
-                    
                     ${i[5] ? `<a href="mailto:${i[5]}" class="btn btn-sm btn-outline-light text-secondary rounded-pill w-100 small" style="font-size:0.8rem; border-color:#eee"><i class="fas fa-envelope me-1"></i> Kontak</a>` : ""}
                 </div>`;
         });
@@ -316,7 +304,6 @@ function setupOrganisasi() {
       });
   });
 
-  // Panel Admin Logic (Tetap sama)
   if (user && user.role === "admin") {
     $("#admin-area").fadeIn();
     $("#form-struktur").submit(function (e) {
@@ -343,23 +330,18 @@ function setupOrganisasi() {
   }
 }
 
-// FUNGSI BARU UNTUK MENGISI DROPDOWN
 function populatePJDropdown() {
   let options =
     '<option value="" selected disabled>Pilih Penanggung Jawab...</option>';
-  // Urutkan nama abjad agar rapi
   globalStruktur
     .sort((a, b) => a[1].localeCompare(b[1]))
     .forEach((member) => {
-      // value=Nama, text=Nama - Jabatan
       options += `<option value="${member[1]}">${member[1]} - ${member[2]}</option>`;
     });
   $("#proker-pj").html(options);
 }
-// GANTI FUNGSI editStruktur LAMA DENGAN INI:
 
 function handleEditStruktur(id) {
-  // 1. Cari data pengurus berdasarkan ID dari variabel global
   let data = globalStruktur.find((item) => item[0] === id);
 
   if (!data) {
@@ -367,37 +349,31 @@ function handleEditStruktur(id) {
     return;
   }
 
-  // 2. Scroll ke Admin Area agar terlihat
   let adminArea = document.getElementById("admin-area");
   adminArea.scrollIntoView({ behavior: "smooth" });
 
-  // 3. Buka Tab "Kelola Pengurus" secara otomatis
-  // Kita gunakan getOrCreateInstance agar lebih stabil
   let tabEl = document.querySelector(
     '#adminTab button[data-bs-target="#tab-struktur"]',
   );
   let tab = bootstrap.Tab.getOrCreateInstance(tabEl);
   tab.show();
 
-  // 4. Isi Form dengan Data yang ditemukan
-  // Urutan Array: 0=ID, 1=Nama, 2=Jabatan, 3=Foto, 4=Urutan, 5=Email, 6=NIM
   $("#struktur-id").val(data[0]);
   $("#str-nama").val(data[1]);
   $("#str-jabatan").val(data[2]);
   $("#str-foto").val(data[3]);
   $("#str-urutan").val(data[4]);
-  $("#str-email").val(data[5] || ""); // Pakai string kosong jika null
-  $("#str-nim").val(data[6] || ""); // Pakai string kosong jika null
+  $("#str-email").val(data[5] || "");
+  $("#str-nim").val(data[6] || "");
 
-  // 5. Ubah Tombol Simpan menjadi Update
   $("#btn-save-struktur")
     .text("Update Pengurus")
     .removeClass("btn-success")
     .addClass("btn-warning");
   $("#btn-cancel-struktur").show();
 }
+
 function checkEditRedirects() {
-  // 1. Cek Edit Proker
   let editProker = localStorage.getItem("edit_proker_data");
   if (editProker) {
     let data = JSON.parse(editProker);
@@ -420,7 +396,6 @@ function checkEditRedirects() {
     document.getElementById("admin-area").scrollIntoView();
   }
 
-  // 2. Cek Edit Event
   let editEvent = localStorage.getItem("edit_event_data");
   if (editEvent) {
     let data = JSON.parse(editEvent);
@@ -446,19 +421,14 @@ function checkEditRedirects() {
   }
 }
 
-// =========================================================
-// 4. PROGRAM KERJA (GRID CARD VIEW)
-// =========================================================
 function setupProkerPage() {
   $("#proker-full-container").html(
     '<div class="col-12 text-center py-5"><div class="spinner-border text-primary"></div></div>',
   );
 
-  // 1. Ambil Data Struktur Dulu (Untuk Foto PJ)
   $.getJSON(API_URL + "?action=get_struktur", function (resStruktur) {
     globalStruktur = resStruktur.data || [];
 
-    // 2. Baru Ambil Data Proker
     $.getJSON(API_URL + "?action=get_proker", function (res) {
       let html = "";
       globalProker = res.data || [];
@@ -481,19 +451,16 @@ function setupProkerPage() {
                 ? "fa-spinner fa-spin"
                 : "fa-clipboard-list";
 
-          // Gambar Utama Dokumentasi Proker
           let imgHTML = i[5]
             ? `<div style="height:150px; overflow:hidden;"><img src="${i[5]}" class="w-100 h-100 object-fit-cover"></div>`
             : `<div style="height:150px; background:#f8f9fa;" class="d-flex align-items-center justify-content-center text-muted"><i class="fas fa-tasks fa-3x opacity-25"></i></div>`;
 
-          // LOGIKA MENCARI FOTO PJ DARI DATA STRUKTUR
           let namaPJ = i[4];
-          let fotoPJ = "https://via.placeholder.com/150"; // Default jika tidak ketemu
+          let fotoPJ = "https://via.placeholder.com/150";
 
-          // Cari pengurus yang namanya sama dengan PJ
           let pengurus = globalStruktur.find((p) => p[1] === namaPJ);
           if (pengurus && pengurus[3]) {
-            fotoPJ = pengurus[3]; // Ambil foto dari data struktur
+            fotoPJ = pengurus[3];
           }
 
           let adminBtn = "";
@@ -547,9 +514,6 @@ function goToEditProker(index) {
   window.location.href = "organisasi.html";
 }
 
-// =========================================================
-// 5. FORUM DISKUSI (FEED STYLE)
-// =========================================================
 function setupForum() {
   loadForum();
   $("#form-thread").submit(function (e) {
@@ -580,7 +544,6 @@ function loadForum() {
   );
 
   $.getJSON(API_URL + "?action=get_forum", function (r) {
-    // Cek jika data kosong
     let html =
       !r.data || r.data.length === 0
         ? '<div class="alert alert-info text-center col-12 shadow-sm border-0 py-4"><i class="far fa-comments fa-2x mb-3"></i><br>Belum ada topik diskusi. Jadilah yang pertama!</div>'
@@ -601,12 +564,7 @@ function loadForum() {
               ? "fa-question-circle"
               : "fa-comments";
 
-        // --- BAGIAN INI YANG DIUBAH ---
-        // i[6] adalah Nama Asli dari Backend.
-        // Jika i[6] kosong (data lama), kita pakai i[2] (Email/NIM) dan ambil depannya saja.
         let displayName = i[6] ? i[6] : i[2].split("@")[0];
-
-        // Ambil huruf depan untuk avatar
         let initial = displayName.charAt(0).toUpperCase();
 
         html += `
@@ -675,9 +633,6 @@ function loadComments(id) {
   });
 }
 
-// =========================================================
-// 6. BURSA KERJA (LOKER)
-// =========================================================
 function setupLoker() {
   $.getJSON(API_URL + "?action=get_loker", function (res) {
     allLokerData = res.data || [];
@@ -775,42 +730,29 @@ function editLoker(id) {
   }
 }
 
-// =========================================================
-// 7. DIREKTORI ALUMNI & PROFIL USER
-// =========================================================
 function setupDirektori() {
-  // Tampilkan loading awal
   $("#alumni-list").html(
     '<div class="col-12 text-center py-5"><div class="spinner-border text-primary"></div><p class="mt-2 text-muted">Mengambil data alumni...</p></div>',
   );
 
-  // 1. Ambil Data dari API
   $.getJSON(API_URL + "?action=get_alumni", function (res) {
-    // Simpan data ke variabel global agar bisa difilter tanpa reload API
     allAlumniData = res.data || [];
-
-    // Tampilkan semua data saat pertama kali load
     renderAlumniList(allAlumniData);
   });
 
-  // 2. Event Listener Tombol Cari (Klik)
   $(".floating-search button").click(function () {
     lakukanPencarian();
   });
 
-  // 3. Event Listener Input Ketik (Realtime Search)
   $("#search-input").on("keyup", function () {
     lakukanPencarian();
   });
 }
 
-// Fungsi Logika Pencarian
 function lakukanPencarian() {
   let keyword = $("#search-input").val().toLowerCase();
 
-  // Filter data array berdasarkan keyword
   let hasilFilter = allAlumniData.filter((alumni) => {
-    // Cek apakah keyword ada di Nama, NIM, Pekerjaan, Skill, atau Angkatan
     return (
       (alumni.nama && alumni.nama.toLowerCase().includes(keyword)) ||
       (alumni.nim && alumni.nim.toString().includes(keyword)) ||
@@ -820,11 +762,9 @@ function lakukanPencarian() {
     );
   });
 
-  // Render ulang list dengan data hasil filter
   renderAlumniList(hasilFilter);
 }
 
-// Fungsi Render HTML (Dipisah agar bisa dipanggil ulang saat searching)
 function renderAlumniList(data) {
   let html = "";
 
@@ -838,7 +778,6 @@ function renderAlumniList(data) {
   } else {
     data.forEach((alumni) => {
       if (user) {
-        // Tampilan untuk User Login (Data Lengkap)
         let skills = alumni.skill
           ? alumni.skill
               .split(",")
@@ -868,7 +807,6 @@ function renderAlumniList(data) {
                     </div>
                 </div>`;
       } else {
-        // Tampilan untuk Pengunjung (Blur/Sensor)
         html += `
                 <div class="col-md-4 mb-4 item-alumni animate-up">
                     <div class="card p-3 h-100 text-center bg-light border-0">
@@ -904,9 +842,6 @@ function setupProfil() {
   });
 }
 
-// =========================================================
-// 8. HELPER FUNCTIONS (MODALS, AUTH, POST)
-// =========================================================
 function setupAuthForms() {
   $("#form-login").submit(function (e) {
     e.preventDefault();
@@ -976,8 +911,6 @@ function hapusData(action, id) {
     });
 }
 
-// === FUNGSI BUKA MODAL DETAIL ===
-
 function bukaDetail(id, t, a, c) {
   $("#detail-judul").text(t);
   $("#detail-isi").text(c);
@@ -993,7 +926,6 @@ function bukaProkerDetail(index) {
   $("#proker-pj-detail").text(data[4]);
   $("#proker-status-detail").text(data[3]);
 
-  // Warna badge status di modal
   let badgeClass =
     data[3] === "Terlaksana"
       ? "bg-success text-white"
@@ -1045,7 +977,6 @@ function bukaEvent(i) {
   }
 }
 
-// === FUNGSI RESET FORM ADMIN ===
 function resetFormProker() {
   $("#form-proker")[0].reset();
   $("#proker-id").val("");
@@ -1087,3 +1018,56 @@ function kembaliKeKategori() {
   $("#view-kategori").fadeIn();
   $("#loker-page-title").text("Kategori Pekerjaan");
 }
+
+(function () {
+  const container = document.getElementById("home-berita-container");
+  const slider = document.getElementById("news-scroll-slider");
+  let isDraggingSlider = false;
+
+  if (!container || !slider) return;
+
+  function updateSliderMax() {
+    const maxScroll = container.scrollWidth - container.clientWidth;
+    slider.max = maxScroll > 0 ? maxScroll : 0;
+
+    if (!isDraggingSlider) {
+      slider.value = container.scrollLeft;
+    }
+
+    slider.style.display = maxScroll > 0 ? "block" : "none";
+  }
+
+  slider.addEventListener("mousedown", () => {
+    isDraggingSlider = true;
+  });
+  slider.addEventListener("touchstart", () => {
+    isDraggingSlider = true;
+  });
+
+  slider.addEventListener("mouseup", () => {
+    isDraggingSlider = false;
+  });
+  slider.addEventListener("touchend", () => {
+    isDraggingSlider = false;
+  });
+
+  slider.addEventListener("input", function () {
+    container.scrollLeft = this.value;
+  });
+
+  container.addEventListener("scroll", function () {
+    if (!isDraggingSlider) {
+      slider.value = this.scrollLeft;
+    }
+  });
+
+  updateSliderMax();
+  window.addEventListener("resize", updateSliderMax);
+
+  let checkCount = 0;
+  const checkInterval = setInterval(() => {
+    updateSliderMax();
+    checkCount++;
+    if (checkCount > 5) clearInterval(checkInterval);
+  }, 1000);
+})();
