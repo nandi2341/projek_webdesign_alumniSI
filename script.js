@@ -873,9 +873,19 @@ function handlePost(form, action) {
     "&action=" +
     action +
     (user ? "&email=" + user.email : "");
+
   $.post(API_URL, data, function (res) {
-    alert(res.message);
-    location.reload();
+    if (res.status === "success") {
+      alert(res.message);
+      if (res.user) {
+        localStorage.setItem("user_alumni", JSON.stringify(res.user));
+      }
+
+      location.reload();
+    } else {
+      alert("Gagal: " + res.message);
+      btn.prop("disabled", false).text(originalText);
+    }
   }).fail(function () {
     alert("Terjadi kesalahan jaringan.");
     btn.prop("disabled", false).text(originalText);
